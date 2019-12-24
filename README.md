@@ -65,7 +65,7 @@ And then:
 After that just install the local dependencies, run migrations, and start the server.
 
 
-#  Silvertec Server
+# Silvertec Server 
 
 # Getting Started
 
@@ -111,3 +111,8 @@ In development time was found one issue that wasn't possible to close in time to
 related to cors headers. Even using a Django-cors-headers the problem persisted and to continue 
 developing the project was user a chrome extension named Moesif CORS even knowing that this is not 
 the solution or the best practise
+
+
+### Prints of the Project
+To see some print's of localhost pages use the following link:
+https://drive.google.com/drive/folders/1vfF4nruDv_HpuC4QO56qR23VlikFEex7?usp=sharing
