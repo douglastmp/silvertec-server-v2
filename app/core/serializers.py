@@ -77,7 +77,7 @@ class GraphicCardSerializer(serializers.ModelSerializer):
             )
 
 
-class BrandCardSerializer(serializers.ModelSerializer):
+class BrandSerializer(serializers.ModelSerializer):
     """Serializer for Brands object"""
 
     class Meta:

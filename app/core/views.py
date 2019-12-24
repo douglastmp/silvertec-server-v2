@@ -1,21 +1,19 @@
 from rest_framework import viewsets, mixins, status, filters
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from core import models, serializers
 
 
 class OrderViewSet(viewsets.GenericViewSet,
                    mixins.ListModelMixin,
+                   mixins.RetrieveModelMixin,
                    mixins.CreateModelMixin):
     """Manage orders in the database"""
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = ['id', 'client', 'processor', 'motherboard']
-    response = Response()
-    response['access-control-allow-origin'] = '*'
-
-    def get_data(request):
-        return 
+    search_fields = ['^client',]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -24,7 +22,7 @@ class OrderViewSet(viewsets.GenericViewSet,
             )
         order_motherboard = models.Motherboard.objects.get(
             pk=request.data['motherboard']
-            )   
+            )
         total_memory = 0
         """Validate memories in Motherboard"""
         try:
@@ -79,7 +77,7 @@ class OrderViewSet(viewsets.GenericViewSet,
             if (not order_motherboard.integrated_video):
                 try:
                     request.data['graphic_card']
-                except:
+                except Exception:
                     pass
                 return Response({
                     'error': 'Placa mãe não possui vídeo integrado'
@@ -106,8 +104,7 @@ class OrderViewSet(viewsets.GenericViewSet,
 
 
 class ProcessorViewSet(viewsets.GenericViewSet,
-                       mixins.ListModelMixin,
-                       mixins.CreateModelMixin):
+                       mixins.ListModelMixin):
     """Manage processor in the database"""
     queryset = models.Processor.objects.all()
     serializer_class = serializers.ProcessorSerializer
@@ -117,8 +114,7 @@ class ProcessorViewSet(viewsets.GenericViewSet,
 
 
 class MemoryViewSet(viewsets.GenericViewSet,
-                    mixins.ListModelMixin,
-                    mixins.CreateModelMixin):
+                    mixins.ListModelMixin):
     """Manage memory in the database"""
     queryset = models.Memory.objects.all()
     serializer_class = serializers.MemorySerializer
@@ -128,8 +124,7 @@ class MemoryViewSet(viewsets.GenericViewSet,
 
 
 class MotherboardViewSet(viewsets.GenericViewSet,
-                         mixins.ListModelMixin,
-                         mixins.CreateModelMixin):
+                         mixins.ListModelMixin):
     """Manage motherboard in the database"""
     queryset = models.Motherboard.objects.all()
     serializer_class = serializers.MotherboardSerializer
@@ -152,7 +147,7 @@ class BrandViewSet(viewsets.GenericViewSet,
                    mixins.ListModelMixin):
     """Manage GraphicCard in the database"""
     queryset = models.Brand.objects.all()
-    serializer_class = serializers.GraphicCardSerializer
+    serializer_class = serializers.BrandSerializer
 
     def perform_create(self, serializer):
         serializer.save()
