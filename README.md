@@ -65,7 +65,7 @@ And then:
 After that just install the local dependencies, run migrations, and start the server.
 
 
-# {{ Silvertec Server }}
+#  Silvertec Server
 
 # Getting Started
 
