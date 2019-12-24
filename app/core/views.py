@@ -1,6 +1,5 @@
 from rest_framework import viewsets, mixins, status, filters
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 from core import models, serializers
 
 
@@ -13,7 +12,7 @@ class OrderViewSet(viewsets.GenericViewSet,
     serializer_class = serializers.OrderSerializer
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = ['id', 'client', 'processor', 'motherboard']
-    search_fields = ['^client',]
+    search_fields = ['^client', ]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

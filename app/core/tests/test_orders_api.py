@@ -21,7 +21,7 @@ class PublicOrderApiTests(TestCase):
 
     def setUp(self):
         self.client = APIClient()
-        self.brand = Brand.objects.create(name="Intel")      
+        self.brand = Brand.objects.create(name="Intel")
 
     def test_processor_list(self):
         """Test getting a list of processors"""
